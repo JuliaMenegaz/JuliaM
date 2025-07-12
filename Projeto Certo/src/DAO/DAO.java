@@ -1,11 +1,131 @@
 package DAO;
 
+import Controller.Conexao;
 import Model.Carro;
+import Model.Usuario;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DAO {
 
-    public void alterarCarro(Carro carroEmEdicao) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    Carro carro;
+    private static PreparedStatement ps = null;
+    private static ResultSet rs = null;
+
+    private static String CADASTRAR_CARRO = "INSERT INTO CARROS (MARCA,MODELO,ANO,COR,ESTADO,CARACTERISTICAS,ACESSORIOS,VALOR) VALUES (?,?,?,?,?,?,?,?);";
+    private static String CONSULTAR_CARRO = "SELECT * FROM CARROS WHERE ID = ?;";
+    private static String ALTERAR_CARRO = "UPDATE CARROS SET MARCA = ?, MODELO = ?,ANO = ?,COR = ?,ESTADO = ?,CARACTERISTICAS = ?,ACESSORIOS = ?,VALOR = ?;";
+    private static String EXCLUIR_CARRO = "DELETE FROM CARROS WHERE ID = ?;";
+    private static String LISTAR_CARRO = "SELECT * FROM CARROS;";//"SELECT * FROM CARRO WHERE 1 = 1;";
+    private static String CONSULTAR_USUARIO = "SELECTE USUARIO, SENHA FROM USUARIO WHERE USUARIO = ? AND SENHA = ?;";
+
+    public DAO() {
+        carro = new Carro("Id", "Marca", "Modelo", "Ano", "Cor", "Estado", "Caracteristicas", "Acessorios", "Valor");
     }
 
+    public void cadastrarCarro(Carro carro) {
+        Connection connection = Conexao.getConn().abrirConexao();
+        try {
+            ps = connection.prepareStatement(CADASTRAR_CARRO);
+            int i = 1;
+            ps.setString(i++, carro.getMarca());
+            ps.setString(i++, carro.getModelo());
+            ps.setString(i++, carro.getAno());
+            ps.setString(i++, carro.getCor());
+            ps.setString(i++, carro.getEstado());
+            ps.setString(i++, carro.getCaracteristicas());
+            ps.setString(i++, carro.getAcessorios());
+            ps.setString(i++, carro.getValor());
+
+            ps.execute();
+            connection.commit();
+
+            JOptionPane.showMessageDialog(null, "Carro incluido com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void alterarCarro(Carro carroEmEdicao) {
+        Connection connection = Conexao.getConn().abrirConexao();
+        try {
+            ps = connection.prepareStatement(ALTERAR_CARRO);//"UPDATE CARRO SET MARCA = ?, MODELO = ?,ANO = ?,COR = ?,ESTADO = ?,CARACTERISTICAS = ?,ACESSORIOS = ?,VALOR = ?;";
+            int i = 1;
+            ps.setString(i++, carro.getMarca());
+            ps.setString(i++, carro.getModelo());
+            ps.setString(i++, carro.getAno());
+            ps.setString(i++, carro.getCor());
+            ps.setString(i++, carro.getEstado());
+            ps.setString(i++, carro.getCaracteristicas());
+            ps.setString(i++, carro.getAcessorios());
+            ps.setString(i++, carro.getValor());
+
+            ps.execute();
+            connection.commit();
+
+            JOptionPane.showMessageDialog(null, "Carro incluido com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluirCarro(String id) {
+        Connection connection = Conexao.getConn().abrirConexao();
+        try {
+            ps = connection.prepareStatement(EXCLUIR_CARRO);
+            ps.setString(1, id);
+
+            ps.execute();
+            connection.commit();
+
+            JOptionPane.showMessageDialog(null, "Carro excluido com sucesso");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Carro consultarCarro(String id) {
+        Connection connection = Conexao.getConn().abrirConexao();
+        Carro carroData = null;
+        try {
+            ps = connection.prepareStatement(CONSULTAR_CARRO);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                carroData = new Carro(rs.getString("ID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("ANO"), rs.getString("COR"), rs.getString("ESTADO"), rs.getString("CARACTERISTICAS"), rs.getString("ACESSORIOS"), rs.getString("VALOR"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return carroData;
+    }
+
+    public ArrayList<Carro> listarCarro() {
+        
+        //Connection connection = Conexao.getConn().abrirConexao();
+        Connection connection = new Conexao().abrirConexao();
+        ArrayList<Carro> arrayListCarros = new ArrayList<>();
+        try {
+            ps = connection.prepareStatement(LISTAR_CARRO);//"SELECT * FROM CARRO;";
+            rs = ps.executeQuery();
+            Carro carroData;
+            while (rs.next()) {
+                carroData = new Carro(rs.getString("ID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("ANO"), rs.getString("COR"), rs.getString("ESTADO"), rs.getString("CARACTERISTICAS"), rs.getString("ACESSORIOS"), rs.getString("VALOR"));
+                arrayListCarros.add(carroData);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (carro == null) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel licalizar o carro selecionado", "", JOptionPane.WARNING_MESSAGE);
+            //
+        }
+        return arrayListCarros;
+    }
 }

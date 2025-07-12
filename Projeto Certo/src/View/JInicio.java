@@ -142,7 +142,6 @@ public class JInicio extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         JButton btnEntrar = new JButton("Entrar");
         Criptografia cripto = new Criptografia(senhaUsuario.getText(), Criptografia.MD5);
-        
         if(txtUsuario.getText() != null && !txtUsuario.getText().isEmpty() && senhaUsuario.getText() != null && !senhaUsuario.getText().isEmpty()){
            if(cripto.criptografar().equals("63A9F0EA7BB98050796B649E85481845")){
                  JOptionPane.showMessageDialog(btnEntrar, "Informações Corretas\nSeja bem-vindo!");
