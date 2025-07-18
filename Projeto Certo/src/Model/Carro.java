@@ -16,6 +16,7 @@ public class Carro {
         this.caracteristicas = caracteristicas;
         this.acessorios = acessorios;
         this.valor = valor;
+        this.modeloTabela = modeloTabela;
     }
 
     public String getId() {

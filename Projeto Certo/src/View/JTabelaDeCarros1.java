@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -21,7 +20,7 @@ import javax.swing.table.TableModel;
  *
  * @author Administrador
  */
-public class JTabelaDeCarros extends javax.swing.JFrame {
+public class JTabelaDeCarros1 extends javax.swing.JFrame {
 
     private ArrayList<Carro> carro;
     private ModeloTabela modeloTabela;
@@ -31,8 +30,9 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
     /**
      * Creates new form JTabelaDeCarros
      */
-    public JTabelaDeCarros() {
+    public JTabelaDeCarros1() {
         initComponents();
+
         DAO dao = new DAO();
 
         try {
@@ -43,10 +43,9 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
         }
         dtm = new DefaultTableModel(columns, 0);
         carro.forEach(c -> dtm.addRow(new String[]{c.getId(), c.getMarca(), c.getModelo(), c.getAno(), c.getCor(), c.getEstado(), c.getCaracteristicas(), c.getAcessorios(), c.getValor()}));
-
-        tabelaCadastrar.setModel(dtm);
         //modeloTabela = new ModeloTabela(carro);
-        //AbstractTableModel atm = (AbstractTableModel) tabelaCadastrar.getModel();
+        tabelaCadastrar.setModel(dtm);
+
         /*
         Esta aqui a funcao que te falei que era pra achar
          */
@@ -209,9 +208,8 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
                     DAO dao = new DAO();
                     dao.excluirCarro(id);
                     System.out.println("Carro excluído do banco de dados com sucesso!");
-                    dtm.removeRow(linhaSelecionada);
-                    //ModeloTabela modelo = (ModeloTabela) tabelaCadastrar.getModel();
-                    //modelo.removerCarroPorId();
+                    ModeloTabela modelo = (ModeloTabela) tabelaCadastrar.getModel();
+                    modelo.removerCarroPorId();
                     System.out.println("Carro removido da tabela! :)");
                     JOptionPane.showMessageDialog(null, "Cadastro excluido com sucesso!");
                 } catch (Exception e) {
@@ -228,19 +226,17 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         int linhaSelecionada = tabelaCadastrar.getSelectedRow();
-        
 
         if (linhaSelecionada != -1) {
             int confirmacao = JOptionPane.showConfirmDialog(null, "Você realmente quer alterar o cadastro selecionado?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
             if (confirmacao == JOptionPane.YES_OPTION) {
                 String id = tabelaCadastrar.getValueAt(linhaSelecionada, 0).toString();
-                
                 DAO dao = new DAO();
 
                 try {
                     Carro carroSelecionado = dao.consultarCarro(id);
-                    JCarros telaEdicao = new JCarros(linhaSelecionada, carroSelecionado, this);
+                    JCarros telaEdicao = new JCarros(carroSelecionado, this);
                     telaEdicao.setLocationRelativeTo(this);
                     telaEdicao.setVisible(true);
 
@@ -275,14 +271,15 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JTabelaDeCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTabelaDeCarros1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JTabelaDeCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTabelaDeCarros1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JTabelaDeCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTabelaDeCarros1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JTabelaDeCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTabelaDeCarros1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -312,17 +309,7 @@ public class JTabelaDeCarros extends javax.swing.JFrame {
     private javax.swing.JTable tabelaCadastrar;
     // End of variables declaration//GEN-END:variables
 
-    void adicionaCarro(Carro c) {
-        dtm.addRow(new String[]{"", c.getMarca(), c.getModelo(), c.getAno(), c.getCor(), c.getEstado(), c.getCaracteristicas(), c.getAcessorios(), c.getValor()});
-        System.out.println("Hahaha");
+    void atualizarCarro(Carro c) {
+     dtm.addRow(new String[]{c.getId(), c.getMarca(), c.getModelo(), c.getAno(), c.getCor(), c.getEstado(), c.getCaracteristicas(), c.getAcessorios(), c.getValor()});   
     }
-    
-    void atualizarCarro(int index, Carro c) {
-        dtm.setValueAt(c.getMarca(), index, 1);//Faz pras outras linha depois ai
-       //dtm.addRow(new String[]{"", c.getMarca(), c.getModelo(), c.getAno(), c.getCor(), c.getEstado(), c.getCaracteristicas(), c.getAcessorios(), c.getValor()});
-
-        //ModeloTabela modelo = (ModeloTabela) tabelaCadastrar.getModel();;
-        //modelo.atualizarCarro(c);
-    }
-    
 }
