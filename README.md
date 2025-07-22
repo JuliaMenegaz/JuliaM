@@ -34,10 +34,10 @@ Liste as principais funcionalidades do seu projeto.
 
 Liste as tecnologias, linguagens e ferramentas usadas.
 
-- Java 17
+- Java 23
 - Swing (GUI)
 - MySQL
-- NetBeans IDE 23
+- NetBeans IDE 24
 - Git e GitHub
 
 ---
