@@ -1,7 +1,7 @@
 # MAVI Veiculos
 
 O programa é um sistema de cadastro desenvolvido para permitir que o usuário gerencie e controle as informações de seus veículos de forma prática e organizada.
-Através da interface do sistema, o usuário pode registrar múltiplos carros, armazenando dados importantes como modelo, marca, ano de fabricação, placa, quilometragem, entre outros.
+Através da interface do sistema, o usuário pode registrar múltiplos carros, armazenando dados importantes como modelo, marca, ano de fabricação, placa, entre outros.
 
 (<img width="769" height="539" alt="image" src="https://github.com/user-attachments/assets/dbf61921-2636-4259-a25e-e8b8e21db401" />)
 
