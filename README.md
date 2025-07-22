@@ -23,7 +23,7 @@ Através da interface do sistema, o usuário pode registrar múltiplos carros, a
 
 Liste as principais funcionalidades do seu projeto.
 
-- [x] Funcionalidade 1 - entrar com um suario usando a senha correta.
+- [x] Funcionalidade 1 - Entrar com o usuario usando a senha correta.
 - [x] Funcionalidade 2 - Deletar um carro cadastrado.
 - [x] Funcionalidade 3 - Alterar um carro cadastrado.
 - [x] Funcionalidade 4 - Cadastrar quantos carros quiser.
